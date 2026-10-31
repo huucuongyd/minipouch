@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #f7f0e8;
+  --paper: #fffbf7;
+  --sand: #e8dcd0;
+  --blush: #e8b4a8;
+  --rose: #c4726a;
+  --clay: #9a534c;
+  --sage: #6f8b74;
+  --moss: #4f6a55;
+  --ink: #2c2420;
+  --muted: #6e615a;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-sand: var(--sand);
+  --color-blush: var(--blush);
+  --color-rose: var(--rose);
+  --color-clay: var(--clay);
+  --color-sage: var(--sage);
+  --color-moss: var(--moss);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-be-vietnam);
+  --font-serif: var(--font-cormorant);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans), "Be Vietnam Pro", sans-serif;
+}
+
+::selection {
+  background: var(--blush);
+  color: var(--ink);
+}
