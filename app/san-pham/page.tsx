@@ -5,7 +5,7 @@ import { products } from "@/lib/products";
 export const metadata: Metadata = {
   title: "Sản phẩm",
   description:
-    "Túi vải hình hộp 15×25cm may tay — xem toàn bộ mẫu MiniPouch và đặt theo họa tiết bạn thích.",
+    "Túi vải hình hộp 15×25cm may tay — xem toàn bộ mẫu NuBeNa và đặt theo họa tiết bạn thích.",
 };
 
 export default function ProductsPage() {

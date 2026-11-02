@@ -5,7 +5,7 @@ import { BagIllustration } from "@/components/BagIllustration";
 export const metadata: Metadata = {
   title: "Về chúng tôi",
   description:
-    "Sứ mệnh MiniPouch: may túi vải hình hộp nhỏ xinh, hữu dụng cho bạn gái trẻ — làm quà, đựng mỹ phẩm, hộp cơm và đồ nhỏ gọn.",
+    "Sứ mệnh NuBeNa: may túi vải hình hộp nhỏ xinh, hữu dụng cho bạn gái trẻ — làm quà, đựng mỹ phẩm, hộp cơm và đồ nhỏ gọn.",
 };
 
 const values = [
@@ -29,7 +29,7 @@ export default function AboutPage() {
       <section className="mx-auto max-w-3xl px-5 py-20 text-center">
         <p className="text-xs tracking-[0.25em] text-sage uppercase">Về chúng tôi</p>
         <h1 className="mt-4 font-serif text-5xl leading-[1.15] text-ink md:text-6xl">
-          Sứ mệnh của MiniPouch
+          Sứ mệnh của NuBeNa
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted">
           May những chiếc túi nhỏ — để ngày thường của bạn gái trẻ cũng có một góc
@@ -48,7 +48,7 @@ export default function AboutPage() {
               Vì túi “xinh” thường quên mất là phải đựng được đồ
             </h2>
             <p>
-              MiniPouch bắt đầu từ một nỗi bực rất đời: đi làm, đi học, đi chơi —
+              NuBeNa bắt đầu từ một nỗi bực rất đời: đi làm, đi học, đi chơi —
               lúc nào cũng có một đống nhỏ cần chỗ. Son, sạc, hộp cơm, một món quà
               mang theo. Túi lớn thì rối. Túi nhựa thì lạnh. Túi “cute” thì hay
               xẹp, không đứng, chẳng đựng được gì ra hồn.
@@ -68,7 +68,7 @@ export default function AboutPage() {
           “Chúng mình may túi không phải để bạn có thêm một món đồ. Mà để những
           thứ bạn mang theo mỗi ngày được ở trong một chiếc túi xứng đáng.”
         </blockquote>
-        <p className="mt-6 text-sm text-muted">— Đội ngũ MiniPouch</p>
+        <p className="mt-6 text-sm text-muted">— Đội ngũ NuBeNa</p>
       </section>
 
       <section className="bg-paper">
@@ -96,7 +96,7 @@ export default function AboutPage() {
           bạn thân, tặng đồng nghiệp, tặng “phiên bản mình của tháng này”.
         </p>
         <p className="mt-4 leading-7 text-muted">
-          MiniPouch không cố làm mọi thứ. Chúng mình làm một chiếc túi hình hộp,
+          NuBeNa không cố làm mọi thứ. Chúng mình làm một chiếc túi hình hộp,
           may tay, đúng cỡ — rồi làm nó đủ đẹp để bạn muốn cầm mỗi ngày.
         </p>
         <Link

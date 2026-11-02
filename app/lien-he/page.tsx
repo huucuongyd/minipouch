@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Liên hệ",
   description:
-    "Gửi form liên hệ MiniPouch để đặt túi vải may tay, hỏi vải, hoặc đặt may theo yêu cầu.",
+    "Gửi form liên hệ NuBeNa để đặt túi vải may tay, hỏi vải, hoặc đặt may theo yêu cầu.",
 };
 
 export default function ContactPage() {
@@ -19,7 +19,7 @@ export default function ContactPage() {
         </h1>
         <p className="mt-4 max-w-lg leading-7 text-muted">
           Đặt túi, hỏi màu vải, hay muốn may một chiếc làm quà — điền form, mail
-          sẽ tới hộp thư MiniPouch. Chúng mình trả lời trong giờ làm việc.
+          sẽ tới hộp thư NuBeNa. Chúng mình trả lời trong giờ làm việc.
         </p>
         <div className="mt-10 rounded-[28px] bg-paper p-6 ring-1 ring-sand md:p-8">
           <Suspense fallback={<p className="text-sm text-muted">Đang tải form...</p>}>
@@ -54,7 +54,7 @@ export default function ContactPage() {
             </li>
             <li>
               <a href={site.facebook} className="text-ink hover:text-clay">
-                Facebook MiniPouch
+                Facebook NuBeNa
               </a>
             </li>
           </ul>

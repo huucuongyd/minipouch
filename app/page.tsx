@@ -17,11 +17,10 @@ export default function Home() {
               Túi vải may tay · {site.size}
             </p>
             <h1 className="mt-4 font-serif text-5xl leading-[1.1] text-ink md:text-6xl">
-              Chiếc túi nhỏ cho những ngày{" "}
-              <em className="text-clay">đầy ắp</em>
+              Mong túi bạn <em className="text-clay">đầy</em>
             </h1>
             <p className="mt-6 max-w-md text-base leading-7 text-muted">
-              MiniPouch may túi vải hình hộp — gọn trong balo, xinh trên bàn. Đựng
+              NuBeNa may túi vải hình hộp — gọn trong balo, xinh trên bàn. Đựng
               mỹ phẩm, hộp cơm, hay gói thành món quà nhỏ cho người thương.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -126,7 +125,7 @@ export default function Home() {
             May vì những điều nhỏ cũng đáng được nâng niu
           </h2>
           <p className="mt-5 leading-7 text-muted">
-            Chúng mình bắt đầu MiniPouch khi không tìm được chiếc túi vừa xinh vừa
+            Chúng mình bắt đầu NuBeNa khi không tìm được chiếc túi vừa xinh vừa
             hữu dụng — cái thì quá “đồ chơi”, cái thì nhựa cứng, cái thì to đến mức
             chẳng biết nhét vào đâu. Hình hộp 15×25cm ra đời từ đúng khoảng trống
             đó: đủ chỗ, không thành gánh.
@@ -172,7 +171,7 @@ export default function Home() {
           href="/lien-he"
           className="mt-8 inline-flex rounded-full bg-ink px-8 py-3.5 text-sm text-paper transition hover:bg-clay"
         >
-          Nhắn MiniPouch
+          Nhắn NuBeNa
         </Link>
       </section>
     </div>

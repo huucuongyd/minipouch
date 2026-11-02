@@ -18,17 +18,27 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
+const title = `${site.name} — ${site.tagline}`;
+
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.tagline}`,
+    default: title,
     template: `%s | ${site.name}`,
   },
   description: site.description,
   openGraph: {
-    title: `${site.name} — ${site.tagline}`,
+    title,
     description: site.description,
+    url: site.url,
+    siteName: site.name,
     locale: "vi_VN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: site.description,
   },
 };
 

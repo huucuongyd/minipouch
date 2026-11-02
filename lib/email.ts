@@ -39,7 +39,7 @@ function escapeHtml(value: string) {
 export async function sendContactEmail(payload: ContactPayload) {
   const to = process.env.MAIL_TO || process.env.SMTP_USER || site.email;
   const from = process.env.MAIL_FROM || process.env.SMTP_USER || site.email;
-  const subject = `[MiniPouch] Liên hệ mới từ ${payload.name}`;
+  const subject = `[NuBeNa] Liên hệ mới từ ${payload.name}`;
   const text = [
     `Tên: ${payload.name}`,
     `Email: ${payload.email}`,
@@ -51,7 +51,7 @@ export async function sendContactEmail(payload: ContactPayload) {
 
   const html = `
     <div style="font-family:Georgia,serif;background:#F7F0E8;padding:24px;color:#2C2420;">
-      <h2 style="margin:0 0 8px;">MiniPouch — lời nhắn mới</h2>
+      <h2 style="margin:0 0 8px;">NuBeNa — lời nhắn mới</h2>
       <p style="margin:0 0 20px;color:#6E615A;">Có khách vừa gửi form liên hệ.</p>
       <table style="width:100%;border-collapse:collapse;background:#FFFBF7;border-radius:16px;">
         <tr><td style="padding:10px 16px;color:#6E615A;">Tên</td><td style="padding:10px 16px;">${escapeHtml(payload.name)}</td></tr>
@@ -64,13 +64,13 @@ export async function sendContactEmail(payload: ContactPayload) {
   `;
 
   if (!isSmtpConfigured()) {
-    console.info("[MiniPouch] SMTP chưa cấu hình. Nội dung form:", payload);
+    console.info("[NuBeNa] SMTP chưa cấu hình. Nội dung form:", payload);
     return { sent: false as const };
   }
 
   const transport = createTransport();
   await transport.sendMail({
-    from: `"MiniPouch" <${from}>`,
+    from: `"NuBeNa" <${from}>`,
     to,
     replyTo: payload.email,
     subject,

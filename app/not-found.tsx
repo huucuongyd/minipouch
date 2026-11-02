@@ -10,7 +10,7 @@ export default function NotFound() {
         href="/"
         className="mt-8 inline-flex rounded-full bg-ink px-6 py-3 text-sm text-paper"
       >
-        Về MiniPouch
+        Về NuBeNa
       </Link>
     </div>
   );

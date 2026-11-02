@@ -1,4 +1,4 @@
-# MiniPouch
+# NuBeNa
 
 Landing page túi vải hình hộp may tay, viết bằng Next.js (App Router). Form liên hệ gửi mail qua Server Action + Nodemailer.
 

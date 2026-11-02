@@ -1,6 +1,6 @@
 export const site = {
-  name: "MiniPouch",
-  tagline: "Túi vải hình hộp, may tay",
+  name: "NuBeNa",
+  tagline: "Mong túi bạn đầy",
   description:
     "Túi vải hình hộp 15×25cm may tay — đựng mỹ phẩm, hộp cơm, làm quà. Gọn, xinh, dùng mỗi ngày.",
   url: "https://minipouch.vn",

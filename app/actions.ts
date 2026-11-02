@@ -70,7 +70,7 @@ export async function submitContact(
       message: "Cảm ơn bạn. Chúng mình sẽ phản hồi qua email trong thời gian sớm nhất.",
     };
   } catch (error) {
-    console.error("[MiniPouch] Gửi mail thất bại:", error);
+    console.error("[NuBeNa] Gửi mail thất bại:", error);
     return {
       status: "error",
       message: "Gửi chưa thành công. Bạn thử lại hoặc nhắn trực tiếp qua Instagram nhé.",
