@@ -3,7 +3,7 @@ export const site = {
   tagline: "Mong túi bạn đầy",
   description:
     "Túi vải hình hộp 15×25cm may tay — đựng mỹ phẩm, hộp cơm, làm quà. Gọn, xinh, dùng mỗi ngày.",
-  url: "https://minipouch.vn",
+  url: "https://nubena.click",
   email: "hello@minipouch.vn",
   phone: "0901 234 567",
   phoneHref: "tel:+84901234567",
