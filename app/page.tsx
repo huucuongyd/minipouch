@@ -2,10 +2,12 @@ import Link from "next/link";
 import { BagIllustration } from "@/components/BagIllustration";
 import { ProductCard } from "@/components/ProductCard";
 import { UseIcon } from "@/components/UseIcon";
-import { products, testimonials, uses } from "@/lib/products";
+import { getProducts } from "@/lib/catalog";
+import { testimonials, uses } from "@/lib/products";
 import { site } from "@/lib/site";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProducts();
   return (
     <div>
       <section className="relative overflow-hidden">

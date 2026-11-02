@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductPlaceholder } from "@/components/ProductPlaceholder";
-import { getProduct, products } from "@/lib/products";
+import { getProduct, getProducts } from "@/lib/catalog";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const products = await getProducts();
   return products.map((product) => ({ id: product.id }));
 }
 
@@ -16,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
   if (!product) {
     return { title: "Không tìm thấy sản phẩm" };
   }
@@ -44,12 +45,13 @@ async function ProductDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
 
   if (!product) {
     notFound();
   }
 
+  const products = await getProducts();
   const others = products.filter((item) => item.id !== product.id).slice(0, 3);
 
   return (

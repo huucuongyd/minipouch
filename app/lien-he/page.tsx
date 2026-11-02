@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ContactForm } from "@/components/ContactForm";
+import { getProducts } from "@/lib/catalog";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -8,6 +9,11 @@ export const metadata: Metadata = {
   description:
     "Gửi form liên hệ NuBeNa để đặt túi vải may tay, hỏi vải, hoặc đặt may theo yêu cầu.",
 };
+
+async function ContactPanel() {
+  const products = await getProducts();
+  return <ContactForm products={products.map((product) => ({ id: product.id, name: product.name }))} />;
+}
 
 export default function ContactPage() {
   return (
@@ -23,7 +29,7 @@ export default function ContactPage() {
         </p>
         <div className="mt-10 rounded-[28px] bg-paper p-6 ring-1 ring-sand md:p-8">
           <Suspense fallback={<p className="text-sm text-muted">Đang tải form...</p>}>
-            <ContactForm />
+            <ContactPanel />
           </Suspense>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ProductCard } from "@/components/ProductCard";
-import { products } from "@/lib/products";
+import { getProducts } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   title: "Sản phẩm",
@@ -8,7 +8,8 @@ export const metadata: Metadata = {
     "Túi vải hình hộp 15×25cm may tay — xem toàn bộ mẫu NuBeNa và đặt theo họa tiết bạn thích.",
 };
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts();
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <p className="text-xs tracking-[0.25em] text-sage uppercase">Sản phẩm</p>

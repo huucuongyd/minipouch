@@ -13,11 +13,14 @@ export type Product = {
   description: string;
 };
 
-export function getProduct(id: string) {
-  return products.find((product) => product.id === id);
-}
+export const patterns: { id: BagPattern; label: string }[] = [
+  { id: "floral", label: "Hoa nhí" },
+  { id: "gingham", label: "Caro sage" },
+  { id: "linen", label: "Linen trơn" },
+  { id: "dots", label: "Chấm bi" },
+];
 
-export const products: Product[] = [
+export const seedProducts: Product[] = [
   {
     id: "hoa-nhi",
     name: "Hoa Nhí",
@@ -58,8 +61,6 @@ export const products: Product[] = [
     description:
       "Nền đào chấm bi, tươi mà không rối. Hay được chọn làm túi đựng skincare mini hoặc quà sinh nhật bạn thân.",
   },
-  // Thêm sản phẩm mới: copy block trên, đổi id (không dấu, không cách), name, giá, mô tả.
-  // Ảnh: image: "/products/ten-file.jpg" sau khi thả file vào public/products/
 ];
 
 export const uses = [

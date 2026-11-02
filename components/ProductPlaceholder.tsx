@@ -12,6 +12,14 @@ export function ProductPlaceholder({
   alt: string;
 }) {
   if (image) {
+    const remote = image.startsWith("http://") || image.startsWith("https://");
+    if (remote) {
+      return (
+        // Product photos can be any https URL saved from the admin page.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={image} alt={alt} className="absolute inset-0 h-full w-full object-cover" />
+      );
+    }
     return (
       <Image
         src={image}

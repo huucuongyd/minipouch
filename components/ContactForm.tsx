@@ -3,14 +3,17 @@
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { submitContact, type ContactState } from "@/app/actions";
-import { products } from "@/lib/products";
 
 const initialState: ContactState = { status: "idle", message: "" };
 
 const fieldClass =
   "mt-2 w-full rounded-2xl border border-sand bg-cream px-4 py-3 text-ink outline-none transition placeholder:text-muted/70 focus:border-rose focus:ring-2 focus:ring-rose/20";
 
-export function ContactForm() {
+export function ContactForm({
+  products,
+}: {
+  products: { id: string; name: string }[];
+}) {
   const [state, formAction, pending] = useActionState(submitContact, initialState);
   const searchParams = useSearchParams();
   const defaultProduct =

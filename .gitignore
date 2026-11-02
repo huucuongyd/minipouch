@@ -34,6 +34,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# catalog edited from the local admin
+/data/products.json
+
 # vercel
 .vercel
 
