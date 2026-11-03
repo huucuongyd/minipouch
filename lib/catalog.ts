@@ -9,13 +9,19 @@ const localCatalogPath = join(process.cwd(), "data", "products.json");
 
 export type CatalogMode = "blob" | "file" | "readonly";
 
-/** Blob SDK accepts OIDC (BLOB_STORE_ID + VERCEL_OIDC_TOKEN) or a static RW token. */
+/**
+ * Blob SDK auth order: BLOB_READ_WRITE_TOKEN, or OIDC (BLOB_STORE_ID + VERCEL_OIDC_TOKEN).
+ * On Vercel, OIDC is injected at runtime — having BLOB_STORE_ID is enough to enable blob mode.
+ * Locally, vercel env pull provides VERCEL_OIDC_TOKEN (or a static RW token).
+ */
 export function hasBlobCredentials(): boolean {
-  if (process.env.BLOB_READ_WRITE_TOKEN?.trim()) return true;
-  if (process.env.BLOB_STORE_ID?.trim() && process.env.VERCEL_OIDC_TOKEN?.trim()) {
-    return true;
-  }
-  return false;
+  const env = process.env;
+  if (env.BLOB_READ_WRITE_TOKEN?.trim()) return true;
+  if (!env.BLOB_STORE_ID?.trim()) return false;
+  // Deployed on Vercel: platform supplies OIDC; do not require reading VERCEL_OIDC_TOKEN here
+  // (it may be absent from process.env even though the SDK can use it).
+  if (env.VERCEL) return true;
+  return Boolean(env.VERCEL_OIDC_TOKEN?.trim());
 }
 
 export function catalogMode(): CatalogMode {

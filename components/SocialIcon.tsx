@@ -1,4 +1,4 @@
-import type { SocialPlatform } from "@/lib/site-settings";
+import type { SocialPlatform } from "@/lib/social";
 
 export function SocialIcon({
   platform,

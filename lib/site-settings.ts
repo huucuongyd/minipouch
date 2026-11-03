@@ -4,23 +4,22 @@ import { BlobNotFoundError, get, put } from "@vercel/blob";
 import { cacheLife, cacheTag } from "next/cache";
 import { catalogMode } from "@/lib/catalog";
 import { site } from "@/lib/site";
+import {
+  isSocialPlatform,
+  socialPlatforms,
+  type SocialLink,
+  type SocialPlatform,
+} from "@/lib/social";
+
+export {
+  socialLabel,
+  socialPlatforms,
+  type SocialLink,
+  type SocialPlatform,
+} from "@/lib/social";
 
 const SETTINGS_PATH = "catalog/site.json";
 const localSettingsPath = join(process.cwd(), "data", "site.json");
-
-export const socialPlatforms = [
-  { id: "instagram", label: "Instagram" },
-  { id: "facebook", label: "Facebook" },
-  { id: "tiktok", label: "TikTok" },
-] as const;
-
-export type SocialPlatform = (typeof socialPlatforms)[number]["id"];
-
-export type SocialLink = {
-  platform: SocialPlatform;
-  url: string;
-  tag: string;
-};
 
 export type SiteSettings = {
   socials: SocialLink[];
@@ -44,10 +43,6 @@ export const seedSocials: SocialLink[] = [
   },
 ];
 
-function isPlatform(value: string): value is SocialPlatform {
-  return socialPlatforms.some((platform) => platform.id === value);
-}
-
 function parseSettings(raw: unknown): SiteSettings | null {
   if (!raw || typeof raw !== "object") return null;
   const record = raw as Record<string, unknown>;
@@ -57,7 +52,9 @@ function parseSettings(raw: unknown): SiteSettings | null {
   for (const item of record.socials) {
     if (!item || typeof item !== "object") continue;
     const social = item as Record<string, unknown>;
-    if (typeof social.platform !== "string" || !isPlatform(social.platform)) continue;
+    if (typeof social.platform !== "string" || !isSocialPlatform(social.platform)) {
+      continue;
+    }
     const url = typeof social.url === "string" ? social.url.trim() : "";
     const tag = typeof social.tag === "string" ? social.tag.trim() : "";
     byPlatform.set(social.platform, { platform: social.platform, url, tag });
@@ -150,8 +147,4 @@ export async function saveSiteSettings(settings: SiteSettings) {
   }
   await mkdir(join(process.cwd(), "data"), { recursive: true });
   await writeFile(localSettingsPath, `${JSON.stringify(settings, null, 2)}\n`, "utf8");
-}
-
-export function socialLabel(platform: SocialPlatform) {
-  return socialPlatforms.find((item) => item.id === platform)?.label ?? platform;
 }

@@ -8,7 +8,7 @@ const storageNote = {
   blob: "Sản phẩm đang lưu trên Vercel Blob và hiện ở trang bán hàng.",
   file: "Đang lưu trên máy này, trong data/products.json. Bản trên Vercel chỉ đổi khi project có Blob store.",
   readonly:
-    "Chưa lưu được trên Vercel. Trong project, tạo Storage → Blob, kết nối Development, rồi chạy vercel env pull.",
+    "Chưa kết nối Blob store. Trong Vercel: Storage → Blob → Connect to Project (Production), rồi Deploy lại.",
 } as const;
 
 export async function AdminShell({ children }: { children: ReactNode }) {

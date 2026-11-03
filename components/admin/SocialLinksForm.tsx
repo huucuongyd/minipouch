@@ -7,7 +7,7 @@ import {
   socialLabel,
   socialPlatforms,
   type SocialLink,
-} from "@/lib/site-settings";
+} from "@/lib/social";
 
 const initialState: AdminFormState = { status: "idle", message: "" };
 
