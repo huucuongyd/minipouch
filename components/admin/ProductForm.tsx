@@ -13,7 +13,7 @@ export function ProductForm({ product }: { product?: Product }) {
   const [state, formAction, pending] = useActionState(saveProduct, initialState);
 
   return (
-    <form action={formAction} className="mt-8 space-y-5">
+    <form action={formAction} encType="multipart/form-data" className="mt-8 space-y-5">
       {product ? <input type="hidden" name="id" value={product.id} /> : null}
       <label className="block text-sm text-ink">
         Tên túi

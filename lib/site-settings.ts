@@ -85,7 +85,7 @@ async function readLocalFile(): Promise<SiteSettings | null> {
 }
 
 async function readBlob(): Promise<SiteSettings | null> {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) return null;
+  if (catalogMode() !== "blob") return null;
   try {
     const result = await get(SETTINGS_PATH, { access: "private", useCache: false });
     if (!result || result.statusCode !== 200) return null;
@@ -145,7 +145,7 @@ export async function saveSiteSettings(settings: SiteSettings) {
   }
   if (catalogMode() === "readonly") {
     throw new Error(
-      "Chưa lưu được trên Vercel. Hãy tạo Blob store cho project để có BLOB_READ_WRITE_TOKEN.",
+      "Chưa lưu được trên Vercel. Hãy tạo Blob store và kết nối project (OIDC hoặc BLOB_READ_WRITE_TOKEN).",
     );
   }
   await mkdir(join(process.cwd(), "data"), { recursive: true });

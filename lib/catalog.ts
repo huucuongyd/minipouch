@@ -9,8 +9,17 @@ const localCatalogPath = join(process.cwd(), "data", "products.json");
 
 export type CatalogMode = "blob" | "file" | "readonly";
 
+/** Blob SDK accepts OIDC (BLOB_STORE_ID + VERCEL_OIDC_TOKEN) or a static RW token. */
+export function hasBlobCredentials(): boolean {
+  if (process.env.BLOB_READ_WRITE_TOKEN?.trim()) return true;
+  if (process.env.BLOB_STORE_ID?.trim() && process.env.VERCEL_OIDC_TOKEN?.trim()) {
+    return true;
+  }
+  return false;
+}
+
 export function catalogMode(): CatalogMode {
-  if (process.env.BLOB_READ_WRITE_TOKEN) return "blob";
+  if (hasBlobCredentials()) return "blob";
   if (process.env.VERCEL) return "readonly";
   return "file";
 }
@@ -72,7 +81,7 @@ async function readLocalFile(): Promise<Product[] | null> {
 }
 
 async function readBlob(): Promise<Product[] | null> {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) return null;
+  if (!hasBlobCredentials()) return null;
   try {
     const result = await get(CATALOG_PATH, { access: "private", useCache: false });
     if (!result || result.statusCode !== 200) return null;
@@ -132,7 +141,7 @@ export async function saveProducts(products: Product[]) {
   }
   if (catalogMode() === "readonly") {
     throw new Error(
-      "Chưa lưu được trên Vercel. Hãy tạo Blob store cho project để có BLOB_READ_WRITE_TOKEN.",
+      "Chưa lưu được trên Vercel. Hãy tạo Blob store và kết nối project (OIDC hoặc BLOB_READ_WRITE_TOKEN).",
     );
   }
   await mkdir(join(process.cwd(), "data"), { recursive: true });
@@ -140,16 +149,29 @@ export async function saveProducts(products: Product[]) {
 }
 
 export async function uploadProductImage(file: File) {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  if (!hasBlobCredentials()) {
     throw new Error(
-      "Chưa có Blob store nên chưa tải ảnh lên được. Bạn có thể dán link ảnh https.",
+      "Chưa có Blob store nên chưa tải ảnh lên được. Chạy vercel env pull hoặc dán link ảnh https.",
     );
   }
+  // Public product photos use IMAGES_STORE_ID (public store). Catalog stays on private BLOB_STORE_ID.
+  const imageStoreId = process.env.IMAGES_STORE_ID?.trim();
   const safeName = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-").slice(-48);
-  const blob = await put(`products/${Date.now()}-${safeName || "anh.jpg"}`, file, {
-    access: "public",
-    addRandomSuffix: true,
-    contentType: file.type || "application/octet-stream",
-  });
-  return blob.url;
+  try {
+    const blob = await put(`products/${Date.now()}-${safeName || "anh.jpg"}`, file, {
+      access: "public",
+      addRandomSuffix: true,
+      contentType: file.type || "application/octet-stream",
+      ...(imageStoreId ? { storeId: imageStoreId } : {}),
+    });
+    return blob.url;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (/private store/i.test(message)) {
+      throw new Error(
+        "Store ảnh cần là public. Tạo Blob store public, đặt IMAGES_STORE_ID, rồi vercel env pull.",
+      );
+    }
+    throw error;
+  }
 }
