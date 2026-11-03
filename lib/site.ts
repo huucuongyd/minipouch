@@ -18,6 +18,6 @@ export const site = {
 export const nav = [
   { href: "/", label: "Trang chủ" },
   { href: "/san-pham", label: "Sản phẩm" },
-  { href: "/ve-chung-toi", label: "Về chúng tôi" },
+  { href: "/ve-chung-minh", label: "Về chúng mình" },
   { href: "/lien-he", label: "Liên hệ" },
 ] as const;

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BagIllustration } from "@/components/BagIllustration";
 
 export const metadata: Metadata = {
-  title: "Về chúng tôi",
+  title: "Về chúng mình",
   description:
     "Sứ mệnh NuBeNa: may túi nhỏ đứng form, xinh và hữu dụng — làm quà, đựng mỹ phẩm, hộp cơm và đồ nhỏ gọn.",
 };
@@ -27,9 +27,9 @@ export default function AboutPage() {
   return (
     <div>
       <section className="mx-auto max-w-3xl px-5 py-20 text-center">
-        <p className="text-xs tracking-[0.25em] text-sage uppercase">Về chúng tôi</p>
+        <p className="text-xs tracking-[0.25em] text-sage uppercase">Về chúng mình</p>
         <h1 className="mt-4 font-serif text-5xl leading-[1.15] text-ink md:text-6xl">
-          Sứ mệnh của NuBeNa
+          Chuyện của NuBeNa
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted">
           May những chiếc túi nhỏ — để ngày thường của bạn gái trẻ cũng có một góc

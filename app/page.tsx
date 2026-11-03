@@ -133,10 +133,10 @@ export default async function Home() {
             trống đó: đủ chỗ, không thành gánh.
           </p>
           <Link
-            href="/ve-chung-toi"
+            href="/ve-chung-minh"
             className="mt-8 inline-flex text-sm text-clay underline decoration-blush underline-offset-4"
           >
-            Đọc về sứ mệnh của chúng mình
+            Đọc về chuyện của chúng mình
           </Link>
         </div>
       </section>

@@ -16,7 +16,7 @@ Mở [http://localhost:3000](http://localhost:3000).
 - `/` — giới thiệu, sản phẩm nổi bật, công dụng
 - `/san-pham` — danh sách toàn bộ túi
 - `/san-pham/[id]` — trang chi tiết từng mẫu
-- `/ve-chung-toi` — sứ mệnh / vì sao may túi này
+- `/ve-chung-minh` — sứ mệnh / vì sao may túi này
 - `/lien-he` — form gửi email
 
 ## Điền thông tin thật
