@@ -6,13 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:ping": "node scripts/db-ping.mjs",
+    "db:migrate": "node scripts/db-migrate.mjs up",
+    "db:migrate:status": "node scripts/db-migrate.mjs status"
   },
   "dependencies": {
     "@vercel/blob": "^2.8.2",
     "next": "16.4.3",
     "nodemailer": "^10.3.1",
     "page-mascot": "^0.1.0",
+    "pg": "^8.23.1",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
@@ -20,6 +24,7 @@
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/nodemailer": "^8.0.2",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

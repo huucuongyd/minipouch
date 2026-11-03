@@ -12,7 +12,7 @@ export type CatalogMode = "blob" | "file" | "readonly";
 /**
  * Blob SDK auth order: BLOB_READ_WRITE_TOKEN, or OIDC (BLOB_STORE_ID + VERCEL_OIDC_TOKEN).
  * On Vercel, OIDC is injected at runtime — having BLOB_STORE_ID is enough to enable blob mode.
- * Locally, vercel env pull provides VERCEL_OIDC_TOKEN (or a static RW token).
+ * Locally, `vercel env pull .env` provides VERCEL_OIDC_TOKEN (or a static RW token).
  */
 export function hasBlobCredentials(): boolean {
   const env = process.env;
@@ -154,7 +154,7 @@ export async function saveProducts(products: Product[]) {
 export async function uploadProductImage(file: File) {
   if (!hasBlobCredentials()) {
     throw new Error(
-      "Chưa có Blob store nên chưa tải ảnh lên được. Chạy vercel env pull hoặc dán link ảnh https.",
+      "Chưa có Blob store nên chưa tải ảnh lên được. Chạy vercel env pull .env hoặc dán link ảnh https.",
     );
   }
   // Public product photos use IMAGES_STORE_ID (public store). Catalog stays on private BLOB_STORE_ID.
@@ -172,7 +172,7 @@ export async function uploadProductImage(file: File) {
     const message = error instanceof Error ? error.message : "";
     if (/private store/i.test(message)) {
       throw new Error(
-        "Store ảnh cần là public. Tạo Blob store public, đặt IMAGES_STORE_ID, rồi vercel env pull.",
+        "Store ảnh cần là public. Tạo Blob store public, đặt IMAGES_STORE_ID, rồi vercel env pull .env.",
       );
     }
     throw error;
