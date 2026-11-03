@@ -7,11 +7,24 @@ export type Product = {
   price: string;
   size: string;
   pattern: BagPattern;
-  /** Đặt đường dẫn ảnh tại đây sau, ví dụ "/products/hoa-nhi.jpg" */
+  /** Ảnh bìa (ảnh đầu tiên) — dùng trên thẻ sản phẩm */
   image?: string;
+  /** Toàn bộ ảnh gallery / carousel trên trang chi tiết */
+  images?: string[];
   /** Mô tả dài hiện trên trang chi tiết sản phẩm */
   description: string;
 };
+
+/** Danh sách ảnh duy nhất cho carousel (ưu tiên images, fallback image). */
+export function productGallery(product: Product): string[] {
+  const urls = [
+    ...(product.images ?? []),
+    ...(product.image ? [product.image] : []),
+  ]
+    .map((url) => url.trim())
+    .filter(Boolean);
+  return [...new Set(urls)];
+}
 
 export const patterns: { id: BagPattern; label: string }[] = [
   { id: "floral", label: "Hoa nhí" },
@@ -28,6 +41,12 @@ export const seedProducts: Product[] = [
     price: "159.000đ",
     size: "15 × 25 cm",
     pattern: "floral",
+    image: "/products/hoa-nhi-1.jpg",
+    images: [
+      "/products/hoa-nhi-1.jpg",
+      "/products/hoa-nhi-2.jpg",
+      "/products/hoa-nhi-3.jpg",
+    ],
     description:
       "Túi hình hộp vải cotton họa tiết hoa nhí. Đứng form, kéo khóa trên miệng. Phù hợp đựng mỹ phẩm, làm quà, hoặc mang theo đồ lặt vặt trong ngày.",
   },
@@ -38,6 +57,8 @@ export const seedProducts: Product[] = [
     price: "159.000đ",
     size: "15 × 25 cm",
     pattern: "gingham",
+    image: "/products/caro-sage-1.jpg",
+    images: ["/products/caro-sage-1.jpg", "/products/caro-sage-2.jpg"],
     description:
       "Caro xanh sage may tay, nhẹ và đứng dáng. Vừa khay cơm văn phòng, cũng xinh khi để trên bàn làm việc.",
   },
@@ -48,6 +69,8 @@ export const seedProducts: Product[] = [
     price: "149.000đ",
     size: "15 × 25 cm",
     pattern: "linen",
+    image: "/products/linen-be-1.jpg",
+    images: ["/products/linen-be-1.jpg", "/products/linen-be-2.jpg"],
     description:
       "Linen be trơn, ít họa tiết. Dành cho bạn thích đồ tối giản: đựng sách mỏng, hộp cơm, hoặc gói quà không cần giấy gói.",
   },
@@ -58,6 +81,12 @@ export const seedProducts: Product[] = [
     price: "159.000đ",
     size: "15 × 25 cm",
     pattern: "dots",
+    image: "/products/cham-bi-1.jpg",
+    images: [
+      "/products/cham-bi-1.jpg",
+      "/products/cham-bi-2.jpg",
+      "/products/cham-bi-3.jpg",
+    ],
     description:
       "Nền đào chấm bi, tươi mà không rối. Hay được chọn làm túi đựng skincare mini hoặc quà sinh nhật bạn thân.",
   },

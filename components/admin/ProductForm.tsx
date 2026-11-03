@@ -78,20 +78,24 @@ export function ProductForm({ product }: { product?: Product }) {
         />
       </label>
       <label className="block text-sm text-ink">
-        Link ảnh
-        <input
-          name="image"
-          defaultValue={product?.image ?? ""}
-          placeholder="https://... hoặc để trống"
-          className={fieldClass}
+        Link ảnh (mỗi dòng một link — ảnh đầu là ảnh bìa)
+        <textarea
+          name="images"
+          rows={4}
+          defaultValue={(product?.images ?? (product?.image ? [product.image] : [])).join(
+            "\n",
+          )}
+          placeholder={"https://...\nhttps://..."}
+          className={`${fieldClass} resize-y font-mono text-sm`}
         />
       </label>
       <label className="block text-sm text-ink">
-        Hoặc tải ảnh lên
+        Hoặc tải thêm ảnh lên (có thể chọn nhiều)
         <input
-          name="imageFile"
+          name="imageFiles"
           type="file"
           accept="image/*"
+          multiple
           className="mt-2 block w-full text-sm text-muted file:mr-4 file:rounded-full file:border-0 file:bg-ink file:px-4 file:py-2 file:text-sm file:text-paper"
         />
       </label>

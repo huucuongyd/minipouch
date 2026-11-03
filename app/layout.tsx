@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Cormorant_Garamond } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { PageMascot } from "@/components/PageMascot";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -48,10 +49,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="vi"
       className={`${beVietnam.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-cream font-sans text-ink">
+      <body
+        className="flex min-h-full flex-col bg-cream font-sans text-ink"
+        suppressHydrationWarning
+      >
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <PageMascot />
       </body>
     </html>
   );

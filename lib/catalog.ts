@@ -36,7 +36,17 @@ function parseProducts(raw: unknown): Product[] | null {
     ) {
       return null;
     }
-    const image = typeof record.image === "string" ? record.image.trim() : "";
+    const images: string[] = [];
+    if (Array.isArray(record.images)) {
+      for (const item of record.images) {
+        if (typeof item !== "string") continue;
+        const url = item.trim();
+        if (url && !images.includes(url)) images.push(url);
+      }
+    }
+    const cover = typeof record.image === "string" ? record.image.trim() : "";
+    if (cover && !images.includes(cover)) images.unshift(cover);
+
     products.push({
       id: record.id,
       name: record.name,
@@ -45,7 +55,8 @@ function parseProducts(raw: unknown): Product[] | null {
       size: record.size,
       pattern: record.pattern,
       description: record.description,
-      ...(image ? { image } : {}),
+      ...(images[0] ? { image: images[0] } : {}),
+      ...(images.length ? { images } : {}),
     });
   }
   return products;

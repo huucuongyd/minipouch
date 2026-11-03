@@ -101,8 +101,10 @@ export async function saveProduct(
   const size = readString(formData, "size") || site.size;
   const pattern = readString(formData, "pattern");
   const description = readString(formData, "description");
-  const imageValue = readString(formData, "image");
-  const imageFile = formData.get("imageFile");
+  const imagesValue = readString(formData, "images");
+  const imageFiles = formData
+    .getAll("imageFiles")
+    .filter((item): item is File => item instanceof File && item.size > 0);
 
   if (name.length < 2 || name.length > 80) {
     return { status: "error", message: "Tên túi cần từ 2 đến 80 ký tự." };
@@ -123,26 +125,40 @@ export async function saveProduct(
     return { status: "error", message: "Hãy chọn một họa tiết." };
   }
 
-  let image = cleanImage(imageValue);
-  if (imageValue && !image) {
-    return { status: "error", message: "Link ảnh cần bắt đầu bằng https:// hoặc /." };
+  const images: string[] = [];
+  for (const line of imagesValue.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    const cleaned = cleanImage(trimmed);
+    if (!cleaned) {
+      return {
+        status: "error",
+        message: "Mỗi link ảnh cần bắt đầu bằng https:// hoặc /.",
+      };
+    }
+    if (!images.includes(cleaned)) images.push(cleaned);
   }
 
-  if (imageFile instanceof File && imageFile.size > 0) {
+  for (const imageFile of imageFiles) {
     if (!imageFile.type.startsWith("image/")) {
       return { status: "error", message: "File tải lên cần là ảnh." };
     }
     if (imageFile.size > 4 * 1024 * 1024) {
-      return { status: "error", message: "Ảnh cần nhỏ hơn 4MB." };
+      return { status: "error", message: "Mỗi ảnh cần nhỏ hơn 4MB." };
     }
     try {
-      image = await uploadProductImage(imageFile);
+      const uploaded = await uploadProductImage(imageFile);
+      if (!images.includes(uploaded)) images.push(uploaded);
     } catch (error) {
       return {
         status: "error",
         message: error instanceof Error ? error.message : "Tải ảnh chưa được.",
       };
     }
+  }
+
+  if (images.length > 12) {
+    return { status: "error", message: "Tối đa 12 ảnh mỗi sản phẩm." };
   }
 
   const products = await readCatalog();
@@ -154,7 +170,8 @@ export async function saveProduct(
     size,
     pattern: pattern as BagPattern,
     description,
-    ...(image ? { image } : {}),
+    ...(images[0] ? { image: images[0] } : {}),
+    ...(images.length ? { images } : {}),
   };
 
   const nextProducts = existingId

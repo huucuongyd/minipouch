@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ProductCard } from "@/components/ProductCard";
-import { ProductPlaceholder } from "@/components/ProductPlaceholder";
+import { ProductGallery } from "@/components/ProductGallery";
 import { getProduct, getProducts } from "@/lib/catalog";
+import { productGallery } from "@/lib/products";
 
 export async function generateStaticParams() {
   const products = await getProducts();
@@ -65,15 +66,11 @@ async function ProductDetail({
       </p>
 
       <div className="mt-8 grid items-start gap-10 md:grid-cols-2">
-        <div className="overflow-hidden rounded-[32px] bg-paper ring-1 ring-sand">
-          <div className="relative aspect-square">
-            <ProductPlaceholder
-              pattern={product.pattern}
-              image={product.image}
-              alt={product.name}
-            />
-          </div>
-        </div>
+        <ProductGallery
+          images={productGallery(product)}
+          pattern={product.pattern}
+          alt={product.name}
+        />
 
         <div>
           <p className="text-xs tracking-[0.25em] text-sage uppercase">
