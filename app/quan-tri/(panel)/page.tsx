@@ -1,11 +1,18 @@
 import Link from "next/link";
+import { CategoryManager } from "@/components/admin/CategoryManager";
 import { DeleteProductButton } from "@/components/admin/DeleteProductButton";
 import { SocialLinksForm } from "@/components/admin/SocialLinksForm";
+import { getCategories } from "@/lib/categories";
 import { getProducts } from "@/lib/catalog";
 import { getSiteSettings } from "@/lib/site-settings";
 
 export default async function AdminHomePage() {
-  const [products, settings] = await Promise.all([getProducts(), getSiteSettings()]);
+  const [products, categories, settings] = await Promise.all([
+    getProducts(),
+    getCategories(),
+    getSiteSettings(),
+  ]);
+  const categoryLabel = new Map(categories.map((category) => [category.id, category.label]));
 
   return (
     <>
@@ -36,6 +43,9 @@ export default async function AdminHomePage() {
                   <p className="font-serif text-2xl text-ink">{product.name}</p>
                   <p className="text-sm text-muted">
                     {product.price} · {product.size}
+                    {categoryLabel.get(product.pattern)
+                      ? ` · ${categoryLabel.get(product.pattern)}`
+                      : ""}
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
@@ -54,6 +64,19 @@ export default async function AdminHomePage() {
             ))
           )}
         </ul>
+      </section>
+
+      <section className="mt-14">
+        <div>
+          <h2 className="font-serif text-3xl text-ink">Danh mục</h2>
+          <p className="mt-2 text-sm text-muted">
+            Thêm, sửa tên, hoặc xóa danh mục dùng khi đăng sản phẩm. Không xóa được nếu còn sản phẩm
+            đang gắn.
+          </p>
+        </div>
+        <div className="mt-6 overflow-hidden rounded-[28px] bg-paper p-5 ring-1 ring-sand md:p-8">
+          <CategoryManager categories={categories} />
+        </div>
       </section>
 
       <section className="mt-14">

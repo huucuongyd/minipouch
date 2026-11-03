@@ -37,6 +37,7 @@ yarn-error.log*
 # catalog edited from the local admin
 /data/products.json
 /data/site.json
+/data/categories.json
 
 # vercel
 .vercel

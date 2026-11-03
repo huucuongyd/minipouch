@@ -9,8 +9,12 @@ import {
   isAdmin,
   adminConfigured,
 } from "@/lib/admin-session";
+import {
+  readCategories,
+  saveCategories,
+} from "@/lib/categories";
 import { readCatalog, saveProducts, uploadProductImage } from "@/lib/catalog";
-import { patterns, type BagPattern, type Product } from "@/lib/products";
+import type { Category, Product } from "@/lib/products";
 import { site } from "@/lib/site";
 import {
   readSiteSettings,
@@ -67,6 +71,18 @@ function refreshCatalog() {
 
 function refreshSiteSettings() {
   updateTag("site-settings");
+}
+
+function refreshCategories() {
+  updateTag("categories");
+}
+
+function uniqueCategoryId(label: string, categories: Category[]) {
+  const base = slugify(label) || "danh-muc";
+  if (!categories.some((category) => category.id === base)) return base;
+  let index = 2;
+  while (categories.some((category) => category.id === `${base}-${index}`)) index += 1;
+  return `${base}-${index}`;
 }
 
 function cleanHttpUrl(value: string) {
@@ -142,8 +158,9 @@ export async function saveProduct(
   if (description.length < 10 || description.length > 2000) {
     return { status: "error", message: "Mô tả cần từ 10 đến 2000 ký tự." };
   }
-  if (!patterns.some((item) => item.id === pattern)) {
-    return { status: "error", message: "Hãy chọn một họa tiết." };
+  const categories = await readCategories();
+  if (!categories.some((item) => item.id === pattern)) {
+    return { status: "error", message: "Hãy chọn một danh mục." };
   }
 
   const images: string[] = [];
@@ -189,7 +206,7 @@ export async function saveProduct(
     tagline,
     price,
     size,
-    pattern: pattern as BagPattern,
+    pattern,
     description,
     ...(images[0] ? { image: images[0] } : {}),
     ...(images.length ? { images } : {}),
@@ -282,4 +299,104 @@ export async function saveSocialLinks(
 
   refreshSiteSettings();
   return { status: "ok", message: "Đã lưu link và tag mạng xã hội." };
+}
+
+export async function saveCategory(
+  _previous: AdminFormState,
+  formData: FormData,
+): Promise<AdminFormState> {
+  await requireAdmin();
+
+  const existingId = readString(formData, "id");
+  const label = readString(formData, "label");
+  const slug = readString(formData, "slug");
+
+  if (label.length < 2 || label.length > 60) {
+    return { status: "error", message: "Tên danh mục cần từ 2 đến 60 ký tự." };
+  }
+
+  const categories = await readCategories();
+
+  if (existingId) {
+    if (!categories.some((category) => category.id === existingId)) {
+      return { status: "error", message: "Không tìm thấy danh mục để sửa." };
+    }
+    try {
+      await saveCategories(
+        categories.map((category) =>
+          category.id === existingId ? { ...category, label } : category,
+        ),
+      );
+    } catch (error) {
+      return {
+        status: "error",
+        message: error instanceof Error ? error.message : "Lưu danh mục chưa được.",
+      };
+    }
+    refreshCategories();
+    redirect("/quan-tri");
+  }
+
+  let id: string;
+  if (slug) {
+    id = slugify(slug);
+    if (!id) {
+      return { status: "error", message: "Mã danh mục không hợp lệ." };
+    }
+    if (categories.some((category) => category.id === id)) {
+      return { status: "error", message: "Mã danh mục đã tồn tại." };
+    }
+  } else {
+    id = uniqueCategoryId(label, categories);
+  }
+
+  try {
+    await saveCategories([...categories, { id, label }]);
+  } catch (error) {
+    return {
+      status: "error",
+      message: error instanceof Error ? error.message : "Thêm danh mục chưa được.",
+    };
+  }
+
+  refreshCategories();
+  redirect("/quan-tri");
+}
+
+export async function deleteCategory(
+  _previous: AdminFormState,
+  formData: FormData,
+): Promise<AdminFormState> {
+  await requireAdmin();
+
+  const id = readString(formData, "id");
+  const categories = await readCategories();
+  if (!categories.some((category) => category.id === id)) {
+    return { status: "error", message: "Không tìm thấy danh mục." };
+  }
+
+  const products = await readCatalog();
+  const inUse = products.filter((product) => product.pattern === id);
+  if (inUse.length > 0) {
+    return {
+      status: "error",
+      message: `Không xóa được: còn ${inUse.length} sản phẩm đang dùng danh mục này.`,
+    };
+  }
+
+  if (categories.length <= 1) {
+    return { status: "error", message: "Cần giữ ít nhất một danh mục." };
+  }
+
+  try {
+    await saveCategories(categories.filter((category) => category.id !== id));
+  } catch (error) {
+    return {
+      status: "error",
+      message: error instanceof Error ? error.message : "Xóa danh mục chưa được.",
+    };
+  }
+
+  refreshCategories();
+  redirect("/quan-tri");
 }

@@ -2,15 +2,22 @@
 
 import { useActionState } from "react";
 import { saveProduct, type AdminFormState } from "@/app/quan-tri/actions";
-import { patterns, type Product } from "@/lib/products";
+import type { Category, Product } from "@/lib/products";
 
 const initialState: AdminFormState = { status: "idle", message: "" };
 
 const fieldClass =
   "mt-2 w-full rounded-2xl border border-sand bg-cream px-4 py-3 text-ink outline-none transition focus:border-rose focus:ring-2 focus:ring-rose/20";
 
-export function ProductForm({ product }: { product?: Product }) {
+export function ProductForm({
+  product,
+  categories,
+}: {
+  product?: Product;
+  categories: Category[];
+}) {
   const [state, formAction, pending] = useActionState(saveProduct, initialState);
+  const defaultCategory = product?.pattern ?? categories[0]?.id ?? "";
 
   return (
     <form action={formAction} encType="multipart/form-data" className="mt-8 space-y-5">
@@ -54,17 +61,23 @@ export function ProductForm({ product }: { product?: Product }) {
         </label>
       </div>
       <label className="block text-sm text-ink">
-        Họa tiết
+        Danh mục
         <select
+          required
           name="pattern"
-          defaultValue={product?.pattern ?? "floral"}
+          defaultValue={defaultCategory}
           className={fieldClass}
+          disabled={categories.length === 0}
         >
-          {patterns.map((pattern) => (
-            <option key={pattern.id} value={pattern.id}>
-              {pattern.label}
-            </option>
-          ))}
+          {categories.length === 0 ? (
+            <option value="">Chưa có danh mục</option>
+          ) : (
+            categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.label}
+              </option>
+            ))
+          )}
         </select>
       </label>
       <label className="block text-sm text-ink">

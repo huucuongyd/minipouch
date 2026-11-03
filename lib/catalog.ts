@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { BlobNotFoundError, get, put } from "@vercel/blob";
 import { cacheLife, cacheTag } from "next/cache";
-import { patterns, seedProducts, type BagPattern, type Product } from "@/lib/products";
+import { seedProducts, type Product } from "@/lib/products";
 
 const CATALOG_PATH = "catalog/products.json";
 const localCatalogPath = join(process.cwd(), "data", "products.json");
@@ -30,10 +30,6 @@ export function catalogMode(): CatalogMode {
   return "file";
 }
 
-function isPattern(value: string): value is BagPattern {
-  return patterns.some((pattern) => pattern.id === value);
-}
-
 function parseProducts(raw: unknown): Product[] | null {
   if (!Array.isArray(raw)) return null;
   const products: Product[] = [];
@@ -41,7 +37,8 @@ function parseProducts(raw: unknown): Product[] | null {
     if (!item || typeof item !== "object") return null;
     const record = item as Record<string, unknown>;
     if (typeof record.id !== "string" || typeof record.pattern !== "string") return null;
-    if (!isPattern(record.pattern)) return null;
+    const pattern = record.pattern.trim();
+    if (!pattern) return null;
     if (
       typeof record.name !== "string" ||
       typeof record.tagline !== "string" ||
@@ -68,7 +65,7 @@ function parseProducts(raw: unknown): Product[] | null {
       tagline: record.tagline,
       price: record.price,
       size: record.size,
-      pattern: record.pattern,
+      pattern,
       description: record.description,
       ...(images[0] ? { image: images[0] } : {}),
       ...(images.length ? { images } : {}),

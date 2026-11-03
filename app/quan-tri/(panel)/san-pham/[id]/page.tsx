@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ProductForm } from "@/components/admin/ProductForm";
+import { getCategories } from "@/lib/categories";
 import { getProduct } from "@/lib/catalog";
 
 export const metadata: Metadata = {
@@ -24,7 +25,7 @@ export default function EditProductPage({
 
 async function EditProduct({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const product = await getProduct(id);
+  const [product, categories] = await Promise.all([getProduct(id), getCategories()]);
   if (!product) notFound();
 
   return (
@@ -34,7 +35,7 @@ async function EditProduct({ params }: { params: Promise<{ id: string }> }) {
       </Link>
       <h2 className="mt-4 font-serif text-4xl text-ink">Sửa {product.name}</h2>
       <div className="mt-6 rounded-[28px] bg-paper p-6 ring-1 ring-sand md:p-8">
-        <ProductForm product={product} />
+        <ProductForm product={product} categories={categories} />
       </div>
     </section>
   );

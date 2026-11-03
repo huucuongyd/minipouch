@@ -1,10 +1,16 @@
 import { useId } from "react";
 import type { BagPattern } from "@/lib/products";
 
-const palettes: Record<
-  BagPattern,
-  { body: string; dark: string; light: string; stitch: string; zipper: string; accent: string }
-> = {
+type BagPalette = {
+  body: string;
+  dark: string;
+  light: string;
+  stitch: string;
+  zipper: string;
+  accent: string;
+};
+
+const palettes: Record<string, BagPalette> = {
   floral: {
     body: "#F3D5C8",
     dark: "#E8B4A8",
@@ -39,13 +45,15 @@ const palettes: Record<
   },
 };
 
+const fallbackPalette = palettes.linen;
+
 function PatternFill({
   pattern,
   id,
   accent,
   dark,
 }: {
-  pattern: BagPattern;
+  pattern: string;
   id: string;
   accent: string;
   dark: string;
@@ -107,7 +115,8 @@ export function BagIllustration({
   const uid = useId().replaceAll(":", "");
   const clipId = `bag-${uid}`;
   const fillId = `fill-${uid}`;
-  const palette = palettes[pattern];
+  const palette = palettes[pattern] ?? fallbackPalette;
+  const fillPattern = palettes[pattern] ? pattern : "linen";
 
   return (
     <svg
@@ -122,7 +131,7 @@ export function BagIllustration({
           <rect x="42" y="48" width="136" height="158" rx="22" />
         </clipPath>
         <PatternFill
-          pattern={pattern}
+          pattern={fillPattern}
           id={fillId}
           accent={palette.accent}
           dark={palette.dark}

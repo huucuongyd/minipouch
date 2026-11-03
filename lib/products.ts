@@ -1,4 +1,10 @@
-export type BagPattern = "floral" | "gingham" | "linen" | "dots";
+/** Id danh mục / họa tiết (ví dụ floral). Có thể thêm từ trang quản trị. */
+export type BagPattern = string;
+
+export type Category = {
+  id: BagPattern;
+  label: string;
+};
 
 export type Product = {
   id: string;
@@ -26,7 +32,8 @@ export function productGallery(product: Product): string[] {
   return [...new Set(urls)];
 }
 
-export const patterns: { id: BagPattern; label: string }[] = [
+/** Danh mục mặc định — dùng khi chưa có file categories.json */
+export const patterns: Category[] = [
   { id: "floral", label: "Hoa nhí" },
   { id: "gingham", label: "Caro sage" },
   { id: "linen", label: "Linen trơn" },
