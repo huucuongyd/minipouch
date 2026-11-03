@@ -48,7 +48,7 @@ export const seedProducts: Product[] = [
       "/products/hoa-nhi-3.jpg",
     ],
     description:
-      "Túi hình hộp vải cotton họa tiết hoa nhí. Đứng form, kéo khóa trên miệng. Phù hợp đựng mỹ phẩm, làm quà, hoặc mang theo đồ lặt vặt trong ngày.",
+      "Vải cotton họa tiết hoa nhí, đứng form, kéo khóa trên miệng. Phù hợp đựng mỹ phẩm, làm quà, hoặc mang theo đồ lặt vặt trong ngày.",
   },
   {
     id: "caro-sage",

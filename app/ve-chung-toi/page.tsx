@@ -5,7 +5,7 @@ import { BagIllustration } from "@/components/BagIllustration";
 export const metadata: Metadata = {
   title: "Về chúng tôi",
   description:
-    "Sứ mệnh NuBeNa: may túi vải hình hộp nhỏ xinh, hữu dụng cho bạn gái trẻ — làm quà, đựng mỹ phẩm, hộp cơm và đồ nhỏ gọn.",
+    "Sứ mệnh NuBeNa: may túi nhỏ đứng form, xinh và hữu dụng — làm quà, đựng mỹ phẩm, hộp cơm và đồ nhỏ gọn.",
 };
 
 const values = [
@@ -54,10 +54,11 @@ export default function AboutPage() {
               xẹp, không đứng, chẳng đựng được gì ra hồn.
             </p>
             <p>
-              Chúng mình chọn hình hộp, khoảng{" "}
-              <strong className="font-medium text-ink">15×25cm</strong>. Đủ cho khay
-              cơm văn phòng. Đủ một set mỹ phẩm đi làm. Đủ để gói thành quà mà
-              người nhận cầm lên là muốn dùng ngay — không phải lịch sự cất đi.
+              Chúng mình chọn form đứng, cỡ vừa tay — khoảng{" "}
+              <strong className="font-medium text-ink">15×25cm</strong>. Đủ cho
+              khay cơm văn phòng. Đủ một set mỹ phẩm đi làm. Đủ để gói thành quà
+              mà người nhận cầm lên là muốn dùng ngay — không phải lịch sự cất
+              đi.
             </p>
           </div>
         </div>
@@ -96,7 +97,7 @@ export default function AboutPage() {
           bạn thân, tặng đồng nghiệp, tặng “phiên bản mình của tháng này”.
         </p>
         <p className="mt-4 leading-7 text-muted">
-          NuBeNa không cố làm mọi thứ. Chúng mình làm một chiếc túi hình hộp,
+          NuBeNa không cố làm mọi thứ. Chúng mình làm một chiếc túi đứng form,
           may tay, đúng cỡ — rồi làm nó đủ đẹp để bạn muốn cầm mỗi ngày.
         </p>
         <Link

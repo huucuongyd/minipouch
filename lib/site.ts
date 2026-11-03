@@ -2,7 +2,7 @@ export const site = {
   name: "NuBeNa",
   tagline: "Mong túi bạn đầy",
   description:
-    "Túi vải hình hộp 15×25cm may tay — đựng mỹ phẩm, hộp cơm, làm quà. Gọn, xinh, dùng mỗi ngày.",
+    "Túi vải may tay, đứng form — đựng mỹ phẩm, hộp cơm, làm quà. Gọn, xinh, dùng mỗi ngày.",
   url: "https://nubena.click",
   email: "hello@minipouch.vn",
   phone: "0901 234 567",

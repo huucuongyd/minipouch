@@ -12,9 +12,15 @@ import {
 import { readCatalog, saveProducts, uploadProductImage } from "@/lib/catalog";
 import { patterns, type BagPattern, type Product } from "@/lib/products";
 import { site } from "@/lib/site";
+import {
+  readSiteSettings,
+  saveSiteSettings,
+  socialPlatforms,
+  type SocialLink,
+} from "@/lib/site-settings";
 
 export type AdminFormState = {
-  status: "idle" | "error";
+  status: "idle" | "error" | "ok";
   message: string;
 };
 
@@ -57,6 +63,21 @@ function cleanImage(value: string) {
 
 function refreshCatalog() {
   updateTag("products");
+}
+
+function refreshSiteSettings() {
+  updateTag("site-settings");
+}
+
+function cleanHttpUrl(value: string) {
+  if (!value) return "";
+  try {
+    const url = new URL(value);
+    if (url.protocol === "https:" || url.protocol === "http:") return url.toString();
+  } catch {
+    return null;
+  }
+  return null;
 }
 
 async function requireAdmin() {
@@ -215,4 +236,50 @@ export async function deleteProduct(
   }
   refreshCatalog();
   redirect("/quan-tri");
+}
+
+export async function saveSocialLinks(
+  _previous: AdminFormState,
+  formData: FormData,
+): Promise<AdminFormState> {
+  await requireAdmin();
+
+  const socials: SocialLink[] = [];
+  for (const platform of socialPlatforms) {
+    const urlValue = readString(formData, `${platform.id}_url`);
+    const tag = readString(formData, `${platform.id}_tag`);
+    const cleaned = cleanHttpUrl(urlValue);
+    if (cleaned === null) {
+      return {
+        status: "error",
+        message: `Link ${platform.label} cần bắt đầu bằng https:// hoặc http://.`,
+      };
+    }
+    if (tag.length > 80) {
+      return {
+        status: "error",
+        message: `Tag ${platform.label} tối đa 80 ký tự.`,
+      };
+    }
+    if (cleaned && !tag) {
+      return {
+        status: "error",
+        message: `Đã có link ${platform.label} thì cần nhập tag hiển thị.`,
+      };
+    }
+    socials.push({ platform: platform.id, url: cleaned, tag });
+  }
+
+  try {
+    const current = await readSiteSettings();
+    await saveSiteSettings({ ...current, socials });
+  } catch (error) {
+    return {
+      status: "error",
+      message: error instanceof Error ? error.message : "Lưu mạng xã hội chưa được.",
+    };
+  }
+
+  refreshSiteSettings();
+  return { status: "ok", message: "Đã lưu link và tag mạng xã hội." };
 }

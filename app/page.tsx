@@ -4,7 +4,6 @@ import { ProductCard } from "@/components/ProductCard";
 import { UseIcon } from "@/components/UseIcon";
 import { getProducts } from "@/lib/catalog";
 import { testimonials, uses } from "@/lib/products";
-import { site } from "@/lib/site";
 
 export default async function Home() {
   const products = await getProducts();
@@ -16,14 +15,15 @@ export default async function Home() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:py-24">
           <div>
             <p className="text-xs tracking-[0.25em] text-sage uppercase">
-              Túi vải may tay · {site.size}
+              May tay · đứng form · vừa balo
             </p>
             <h1 className="mt-4 font-serif text-5xl leading-[1.1] text-ink md:text-6xl">
               Mong túi bạn <em className="text-clay">đầy</em>
             </h1>
             <p className="mt-6 max-w-md text-base leading-7 text-muted">
-              NuBeNa may túi vải hình hộp — gọn trong balo, xinh trên bàn. Đựng
-              mỹ phẩm, hộp cơm, hay gói thành món quà nhỏ cho người thương.
+              NuBeNa may những chiếc túi nhỏ đứng dáng — gọn trong balo, xinh
+              trên bàn. Đựng mỹ phẩm, hộp cơm, hay gói thành món quà cho người
+              thương.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -57,7 +57,7 @@ export default async function Home() {
 
       <section className="border-y border-sand bg-paper">
         <div className="mx-auto grid max-w-6xl gap-6 px-5 py-8 text-center sm:grid-cols-3">
-          {["May tay từng chiếc", "Kích thước 15 × 25 cm", "Vải cotton / linen"].map(
+          {["May tay từng chiếc", "Nhỏ gọn, đứng form", "Vải cotton / linen"].map(
             (item) => (
               <p key={item} className="text-sm tracking-wide text-muted">
                 {item}
@@ -74,7 +74,7 @@ export default async function Home() {
             Mỗi chiếc một tính cách
           </h2>
           <p className="mt-4 text-muted">
-            Cùng kích thước 15×25cm. Chọn họa tiết mình thích rồi nhắn chúng mình.
+            Cùng một cỡ vừa tay — chọn họa tiết mình thích rồi nhắn chúng mình.
           </p>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -129,8 +129,8 @@ export default async function Home() {
           <p className="mt-5 leading-7 text-muted">
             Chúng mình bắt đầu NuBeNa khi không tìm được chiếc túi vừa xinh vừa
             hữu dụng — cái thì quá “đồ chơi”, cái thì nhựa cứng, cái thì to đến mức
-            chẳng biết nhét vào đâu. Hình hộp 15×25cm ra đời từ đúng khoảng trống
-            đó: đủ chỗ, không thành gánh.
+            chẳng biết nhét vào đâu. Chiếc túi đứng form ra đời từ đúng khoảng
+            trống đó: đủ chỗ, không thành gánh.
           </p>
           <Link
             href="/ve-chung-toi"

@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ContactForm } from "@/components/ContactForm";
+import { SocialIcon } from "@/components/SocialIcon";
 import { getProducts } from "@/lib/catalog";
 import { site } from "@/lib/site";
+import { getActiveSocials, socialLabel } from "@/lib/site-settings";
 
 export const metadata: Metadata = {
   title: "Liên hệ",
   description:
-    "Gửi form liên hệ NuBeNa để đặt túi vải may tay, hỏi vải, hoặc đặt may theo yêu cầu.",
+    "Gửi form liên hệ NuBeNa để đặt túi, hỏi vải, hoặc đặt may theo yêu cầu.",
 };
 
 async function ContactPanel() {
@@ -15,7 +17,9 @@ async function ContactPanel() {
   return <ContactForm products={products.map((product) => ({ id: product.id, name: product.name }))} />;
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const socials = await getActiveSocials();
+
   return (
     <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1.1fr_0.9fr] md:py-24">
       <div>
@@ -53,16 +57,19 @@ export default function ContactPage() {
                 {site.email}
               </a>
             </li>
-            <li>
-              <a href={site.instagram} className="text-ink hover:text-clay">
-                Instagram {site.instagramHandle}
-              </a>
-            </li>
-            <li>
-              <a href={site.facebook} className="text-ink hover:text-clay">
-                Facebook NuBeNa
-              </a>
-            </li>
+            {socials.map((social) => (
+              <li key={social.platform}>
+                <a
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-ink hover:text-clay"
+                >
+                  <SocialIcon platform={social.platform} className="h-4 w-4" />
+                  {socialLabel(social.platform)} {social.tag}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
         <p className="text-xs leading-5 text-muted">

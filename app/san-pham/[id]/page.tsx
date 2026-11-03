@@ -74,7 +74,7 @@ async function ProductDetail({
 
         <div>
           <p className="text-xs tracking-[0.25em] text-sage uppercase">
-            Túi vải hình hộp
+            May tay · đứng form
           </p>
           <h1 className="mt-3 font-serif text-5xl text-ink">{product.name}</h1>
           <p className="mt-4 text-xl text-clay">{product.price}</p>

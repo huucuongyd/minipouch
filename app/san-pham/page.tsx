@@ -5,7 +5,7 @@ import { getProducts } from "@/lib/catalog";
 export const metadata: Metadata = {
   title: "Sản phẩm",
   description:
-    "Túi vải hình hộp 15×25cm may tay — xem toàn bộ mẫu NuBeNa và đặt theo họa tiết bạn thích.",
+    "Xem toàn bộ mẫu túi NuBeNa — may tay, đứng form, chọn theo họa tiết bạn thích.",
 };
 
 export default async function ProductsPage() {
@@ -17,8 +17,8 @@ export default async function ProductsPage() {
         Túi vải đang có
       </h1>
       <p className="mt-4 max-w-xl leading-7 text-muted">
-        {products.length} mẫu hình hộp, cùng cỡ 15×25cm. Chọn họa tiết rồi nhắn
-        chúng mình để đặt.
+        {products.length} mẫu đứng form, cùng một cỡ vừa tay. Chọn họa tiết rồi
+        nhắn chúng mình để đặt.
       </p>
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

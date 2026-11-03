@@ -179,7 +179,7 @@ export function createLinkPreview() {
                   color: "#6F8B74",
                 }}
               >
-                TÚI VẢI MAY TAY
+                MAY TAY · ĐỨNG FORM
               </div>
             </div>
 
